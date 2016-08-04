@@ -1,9 +1,15 @@
 /// <reference path="d/d3.d.ts" />
 import d3 = require('d3');
 
+export interface Offset {
+    top? : number;
+    left? : number;
+}
+
 export interface Options {
     zIndex? : number;
     class? : string;
+    offset? : Offset;
 }
 
 export interface ContentGetter<T> extends Function {
@@ -17,8 +23,18 @@ export interface Tip<T> {
     destroy() : void;
 }
 
-export default function<T> (contentGetter : ContentGetter<T>, options : Options) {
+const defaultOffset : Offset = { top: -10, left: 10 };
+function getOffset(offset? : Offset) : Offset {
+    if (!offset) return defaultOffset;
+    return {
+        top: offset.top === undefined ? defaultOffset.top : offset.top,
+        left: offset.left === undefined ? defaultOffset.left : offset.left
+    };
+}
+
+export default function<T> (contentGetter : ContentGetter<T>, options? : Options) {
     options = options || {};
+    const offset : Offset = getOffset(options.offset);
 
     return function (element : d3.Selection<any>) : Tip<T> {
         const tip : d3.Selection<any> = d3.select('body')
@@ -31,8 +47,8 @@ export default function<T> (contentGetter : ContentGetter<T>, options : Options)
         function setupTracking(element : d3.Selection<any>) : void {
             element.on('mousemove', (event : MouseEvent) : void => {
                 tip
-                    .style("top", `${event.pageY-10}px`)
-                    .style("left", `${event.pageX+10}px`);
+                    .style("top", `${event.pageY + offset.top}px`)
+                    .style("left", `${event.pageX + offset.left}px`);
             });
         }
         setupTracking(element);

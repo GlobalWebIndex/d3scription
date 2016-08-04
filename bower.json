@@ -1,0 +1,26 @@
+{
+  "name": "d3scription",
+  "description": "D3.js tooltip plugin made simple. With single-page apps in mind.",
+  "main": "dist/d3scription.js",
+  "authors": [
+    "GlobalWebIndex / Marek Fajkus"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "d3",
+    "tip",
+    "tooltip",
+    "description"
+  ],
+  "homepage": "https://github.com/GlobalWebIndex/d3scription",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": "^4.2.1"
+  }
+}

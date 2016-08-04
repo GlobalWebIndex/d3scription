@@ -1,0 +1,32 @@
+{
+  "name": "d3scription",
+  "version": "0.0.1",
+  "description": "D3.js tooltip plugin made simple. With single-page apps in mind. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "node_modules/typescript/bin/tsc index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GlobalWebIndex/d3scription.git"
+  },
+  "keywords": [
+    "d3",
+    "tip",
+    "tooltip",
+    "description"
+  ],
+  "author": "GlobalWebIndex / Marek Fajkus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GlobalWebIndex/d3scription/issues"
+  },
+  "homepage": "https://github.com/GlobalWebIndex/d3scription#readme",
+  "devDependencies": {
+    "typescript": "^1.8.10"
+  },
+  "dependencies": {
+    "d3": "^4.2.1"
+  }
+}

@@ -10,9 +10,9 @@ export interface ContentGetter<T> extends Function {
     (data : T) : string;
 }
 
-export interface Tip {
+export interface Tip<T> {
     setElement(element : d3.Selection<any>) : void;
-    show(data : any) : void;
+    show(data : T) : void;
     hide() : void;
     destroy() : void;
 }
@@ -20,10 +20,10 @@ export interface Tip {
 export default function<T> (contentGetter : ContentGetter<T>, options : Options) {
     options = options || {};
 
-    return function (element : d3.Selection<any>) : Tip {
-        const tip = d3.select('body')
+    return function (element : d3.Selection<any>) : Tip<T> {
+        const tip : d3.Selection<any> = d3.select('body')
             .append('div')
-            .attr('class', options.class || 'gwi-charts-tip')
+            .attr('class', options.class || 'd3scription-tip')
             .style('position', 'absolute')
             .style('z-index', options.zIndex || 100)
             .style('visibility', 'hidden');
@@ -37,11 +37,11 @@ export default function<T> (contentGetter : ContentGetter<T>, options : Options)
         }
         setupTracking(element);
 
-        const publicMethods : Tip = {
-            setElement(element) {
+        const publicMethods : Tip<T> = {
+            setElement(element : d3.Selection<any>) {
                 setupTracking(element);
             },
-            show(data) {
+            show(data : T) {
                 tip.html(contentGetter.bind(this, data));
                 tip.style('visibility', 'visible');
             },

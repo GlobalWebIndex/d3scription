@@ -45,10 +45,10 @@ export default function<T> (contentGetter : ContentGetter<T>, options? : Options
             .style('visibility', 'hidden');
 
         function setupTracking(element : d3.Selection<any>) : void {
-            element.on('mousemove', (event : MouseEvent) : void => {
+            element.on('mousemove', () : void => {
                 tip
-                    .style("top", `${event.pageY + offset.top}px`)
-                    .style("left", `${event.pageX + offset.left}px`);
+                    .style("top", `${d3.event.pageY + offset.top}px`)
+                    .style("left", `${d3.event.pageX + offset.left}px`);
             });
         }
         setupTracking(element);
@@ -58,7 +58,7 @@ export default function<T> (contentGetter : ContentGetter<T>, options? : Options
                 setupTracking(element);
             },
             show(data : T) {
-                tip.html(contentGetter.bind(this, data));
+                tip.html(contentGetter(data));
                 tip.style('visibility', 'visible');
             },
             hide() {

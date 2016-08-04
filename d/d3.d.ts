@@ -946,10 +946,15 @@ declare namespace d3 {
 		 dy: number;
 	 }
 
+    interface MEvent extends MouseEvent {
+        pageX : number;
+        pageY : number;
+    }
+
     /**
      * The current event's value. Use this variable in a handler registered with `selection.on`.
      */
-    export var event: Event | BaseEvent;
+    export var event: MEvent;
 
     /**
      * Returns the x and y coordinates of the mouse relative to the provided container element, using d3.event for the mouse's position on the page.

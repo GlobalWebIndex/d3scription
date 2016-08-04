@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "typings install",
+    "watch": "webpack --watch",
     "compile": "node_modules/typescript/bin/tsc index.ts"
   },
   "repository": {

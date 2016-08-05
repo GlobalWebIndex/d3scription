@@ -1,5 +1,4 @@
 /// <reference path="d/d3.d.ts" />
-import d3 = require('d3');
 
 export interface Offset {
     top? : number;
@@ -32,7 +31,7 @@ function getOffset(offset? : Offset) : Offset {
     };
 }
 
-export default function<T> (contentGetter : ContentGetter<T>, options? : Options) {
+export default function d3scription<T> (contentGetter : ContentGetter<T>, options? : Options) {
     options = options || {};
     const offset : Offset = getOffset(options.offset);
 
@@ -71,4 +70,9 @@ export default function<T> (contentGetter : ContentGetter<T>, options? : Options
 
         return publicMethods;
     };
+}
+
+// export as Global Object
+if (window && !window['d3scription']) {
+    window['d3scription'] = d3scription;
 }

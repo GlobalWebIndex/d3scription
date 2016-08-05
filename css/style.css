@@ -1,0 +1,9 @@
+.d3scription-tip {
+  font-size: 11px;
+  color: white;
+  background: #283645;
+  box-shadow: 0 0 10px rgba(0,0,0,.7);
+  border-radius: 3px;
+  padding: 5px 10px;
+  min-width: 190px;
+}

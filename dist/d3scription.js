@@ -103,7 +103,7 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	    Object.defineProperty(exports, "__esModule", { value: true });
 	    exports.default = d3scription;
 	    // export as Global Object
-	    if (window && !window['d3scription']) {
+	    if (window) {
 	        window['d3scription'] = d3scription;
 	    }
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));

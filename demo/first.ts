@@ -9,13 +9,13 @@ interface D {
 
 const data : D[] = [
     {
-        x: 50,
-        y: 100,
+        x: 30*Math.random()+50,
+        y: 100*Math.random()+50,
         desc: 'We are your friends...'
     },
     {
-        x: 200,
-        y: 50,
+        x: 300*Math.random()+50,
+        y: 70*Math.random()+50,
         desc: 'I love it!'
     }
 ]

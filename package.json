@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "typings install",
     "watch": "node_modules/webpack/bin/webpack.js --watch",
-    "compile": "node_modules/typescript/bin/tsc index.ts -m commonjs && node_modules/webpack/bin/webpack.js"
+    "compile": "node_modules/typescript/bin/tsc index.ts -m commonjs -d && node_modules/webpack/bin/webpack.js"
   },
   "repository": {
     "type": "git",

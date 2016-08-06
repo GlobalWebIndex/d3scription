@@ -33,7 +33,7 @@ If you do not want to use any dependency manager in your project you can simply 
 and place it in your project. This is exactly the same file as installed using bower. It supports **AMD modules or global `d3scription` function**.
 
 ```
-curl https://github.com/GlobalWebIndex/d3scription/dist/d3scription.js > d3scription.js
+curl https://raw.githubusercontent.com/GlobalWebIndex/d3scription/master/dist/d3scription.js > d3scription.js
 ```
 
 # Usage

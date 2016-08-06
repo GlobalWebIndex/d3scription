@@ -65,7 +65,7 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	        };
 	    }
 	    function d3scription(contentGetter, options) {
-	        options = options || {};
+	        if (options === void 0) { options = {}; }
 	        var offset = getOffset(options.offset);
 	        return function (element) {
 	            var tip = d3.select('body')

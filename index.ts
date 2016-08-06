@@ -31,8 +31,7 @@ function getOffset(offset? : Offset) : Offset {
     };
 }
 
-export default function d3scription<T> (contentGetter : ContentGetter<T>, options? : Options) {
-    options = options || {};
+export default function d3scription<T> (contentGetter : ContentGetter<T>, options:Options = {}) {
     const offset : Offset = getOffset(options.offset);
 
     return function (element : d3.Selection<any>) : Tip<T> {

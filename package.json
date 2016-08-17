@@ -4,7 +4,7 @@
   "description": "D3.js tooltip plugin made simple. With single-page apps in mind. ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node_modules/typescript/bin/tsc test/test.ts && node_modules/mocha/bin/mocha",
     "prepublish": "npm run compile",
     "watch": "node_modules/webpack/bin/webpack.js --watch",
     "compile": "node_modules/typescript/bin/tsc index.ts -m commonjs -d && node_modules/webpack/bin/webpack.js"
@@ -26,6 +26,9 @@
   },
   "homepage": "https://github.com/GlobalWebIndex/d3scription#readme",
   "devDependencies": {
+    "chai": "^3.5.0",
+    "jsdom": "^9.4.2",
+    "mocha": "^3.0.2",
     "ts-loader": "^0.8.2",
     "typescript": "^2.1.0-dev.20160804",
     "webpack": "^1.13.1"

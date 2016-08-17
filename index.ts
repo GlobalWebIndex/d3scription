@@ -72,6 +72,6 @@ export default function d3scription<T> (contentGetter : ContentGetter<T>, option
 }
 
 // export as Global Object
-if (window) {
+if (typeof window === 'object') {
     window['d3scription'] = d3scription;
 }

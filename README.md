@@ -1,6 +1,6 @@
 # d3scription
 
-D3 tooltip description following mouse cursor.
+D3 tooltip description following mouse cursor. With window edge collision solved.
 
 ![screenshot](media/screenshot.png)
 
@@ -239,6 +239,10 @@ var cEnter = circles.enter()
     // hide tip on mouseout event
     .on('mouseout', tip.hide);
 ```
+# Changelog
+
+- v0.0.2 - window edge collision detections
+- v0.0.1 - initial release
 
 # Building localy
 

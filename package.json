@@ -1,6 +1,6 @@
 {
   "name": "d3scription",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "D3.js tooltip plugin made simple. With single-page apps in mind. ",
   "main": "index.js",
   "scripts": {

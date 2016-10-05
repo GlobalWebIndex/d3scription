@@ -55,8 +55,27 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/// <reference path="d/d3.d.ts" />
 	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
 	    "use strict";
-	    var defaultOffset = { top: -10, left: 10 };
-	    function getOffset(offset) {
+	    var windowDimensions = {
+	        width: window.innerWidth,
+	        height: window.innerHeight
+	    };
+	    function setWindowDimmensions() {
+	        windowDimensions = {
+	            width: window.innerWidth,
+	            height: window.innerHeight
+	        };
+	    }
+	    var windowResize = window.addEventListener('resize', setWindowDimmensions);
+	    function getOffset(event, bounds, offset) {
+	        var collideVertically = (windowDimensions.height + window.scrollY) - event.pageY - offset.top - bounds.height < 0;
+	        var collideHorizontally = (windowDimensions.width + window.scrollX) - event.pageX - offset.left - bounds.width < 0;
+	        return {
+	            top: collideVertically ? event.pageY - bounds.height - offset.top : offset.top + event.pageY,
+	            left: collideHorizontally ? event.pageX - bounds.width - offset.left : event.pageX + offset.left
+	        };
+	    }
+	    var defaultOffset = { top: 10, left: 10 };
+	    function getOffsetSettings(offset) {
 	        if (!offset)
 	            return defaultOffset;
 	        return {
@@ -66,7 +85,7 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	    }
 	    function d3scription(contentGetter, options) {
 	        if (options === void 0) { options = {}; }
-	        var offset = getOffset(options.offset);
+	        var offsetSettings = getOffsetSettings(options.offset);
 	        return function (element) {
 	            var tip = d3.select('body')
 	                .append('div')
@@ -76,9 +95,11 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	                .style('visibility', 'hidden');
 	            function setupTracking(element) {
 	                element.on('mousemove', function () {
+	                    var bounds = tip.node().getBoundingClientRect();
+	                    var position = getOffset(d3.event, bounds, offsetSettings);
 	                    tip
-	                        .style("top", (d3.event.pageY + offset.top) + "px")
-	                        .style("left", (d3.event.pageX + offset.left) + "px");
+	                        .style("top", position.top + "px")
+	                        .style("left", position.left + "px");
 	                });
 	            }
 	            setupTracking(element);
@@ -103,7 +124,7 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	    Object.defineProperty(exports, "__esModule", { value: true });
 	    exports.default = d3scription;
 	    // export as Global Object
-	    if (window) {
+	    if (typeof window === 'object') {
 	        window['d3scription'] = d3scription;
 	    }
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));

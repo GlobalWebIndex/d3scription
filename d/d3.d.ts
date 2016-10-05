@@ -386,7 +386,7 @@ declare namespace d3 {
             /**
              * Returns the first non-null element in the selection, or null otherwise.
              */
-            node(): Node;
+            node(): MyNode;
 
             /**
              * Returns the total number of elements in the selection.
@@ -794,7 +794,7 @@ declare namespace d3 {
         /**
          * Returns the first non-null element in the selection, or null otherwise.
          */
-        node(): Node;
+        node(): MyNode;
 
         /**
          * Returns the total number of elements in the selection.
@@ -857,7 +857,7 @@ declare namespace d3 {
         call(func: (transition: Transition<Datum>, ...args: any[]) => any, ...args: any[]): Transition<Datum>;
 
         empty(): boolean;
-        node(): Node;
+        node(): MyNode;
         size(): number;
     }
 
@@ -3369,6 +3369,10 @@ declare namespace d3 {
             clip(subject: Array<[number, number]>): Array<[number, number]>;
         }
     }
+}
+
+interface MyNode {
+    getBoundingClientRect() : ClientRect;
 }
 
 // we need this to exist

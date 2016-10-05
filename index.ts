@@ -27,6 +27,11 @@ interface WindowDimensions {
     height : number
 }
 
+interface Position {
+    top : number,
+    left : number,
+}
+
 let windowDimensions : WindowDimensions = {
     width: window.innerWidth,
     height: window.innerHeight
@@ -41,9 +46,9 @@ function setWindowDimmensions() : void {
 
 const windowResize = window.addEventListener('resize', setWindowDimmensions);
 
-function getOffset(event, bounds, offset) {
-    const collideHorizontally = windowDimensions.width - event.pageX - offset.left - bounds.width < 0;
-    const collideVertically = windowDimensions.height - event.pageY - offset.top - bounds.height < 0;
+function getOffset(event : MouseEvent, bounds : ClientRect, offset : Position) : Position {
+    const collideVertically : boolean = (windowDimensions.height + window.scrollY) - event.pageY - offset.top - bounds.height < 0;
+    const collideHorizontally : boolean = (windowDimensions.width + window.scrollX) - event.pageX - offset.left - bounds.width < 0;
 
     return {
         top: collideVertically ? event.pageY - bounds.height - offset.top : offset.top + event.pageY,
@@ -51,8 +56,8 @@ function getOffset(event, bounds, offset) {
     };
 }
 
-const defaultOffset : Offset = { top: 10, left: 10 };
-function getOffsetSettings(offset? : Offset) : Offset {
+const defaultOffset : Position = { top: 10, left: 10 };
+function getOffsetSettings(offset? : Offset) : Position {
     if (!offset) return defaultOffset;
     return {
         top: offset.top === undefined ? defaultOffset.top : offset.top,
@@ -61,7 +66,7 @@ function getOffsetSettings(offset? : Offset) : Offset {
 }
 
 export default function d3scription<T> (contentGetter : ContentGetter<T>, options:Options = {}) {
-    const offsetSettings : Offset = getOffsetSettings(options.offset);
+    const offsetSettings : Position = getOffsetSettings(options.offset);
 
     return function (element : d3.Selection<any>) : Tip<T> {
         const tip : d3.Selection<any> = d3.select('body')
@@ -73,8 +78,8 @@ export default function d3scription<T> (contentGetter : ContentGetter<T>, option
 
         function setupTracking(element : d3.Selection<any>) : void {
             element.on('mousemove', () : void => {
-                const bounds = tip.node().getBoundingClientRect();
-                const position = getOffset(d3.event, bounds, offsetSettings)
+                const bounds : ClientRect = tip.node().getBoundingClientRect();
+                const position : Position = getOffset(d3.event, bounds, offsetSettings)
 
                 tip
                     .style("top", `${position.top}px`)
@@ -84,17 +89,17 @@ export default function d3scription<T> (contentGetter : ContentGetter<T>, option
         setupTracking(element);
 
         const publicMethods : Tip<T> = {
-            setElement(element : d3.Selection<any>) {
+            setElement(element : d3.Selection<any>) : void {
                 setupTracking(element);
             },
-            show(data : T) {
+            show(data : T) : void {
                 tip.html(contentGetter(data));
                 tip.style('visibility', 'visible');
             },
-            hide() {
+            hide() : void {
                 tip.style('visibility', 'hidden');
             },
-            destroy() {
+            destroy() : void {
                 tip.remove();
             }
         };
@@ -104,6 +109,6 @@ export default function d3scription<T> (contentGetter : ContentGetter<T>, option
 }
 
 // export as Global Object
-if (window) {
+if (typeof window === 'object') {
     window['d3scription'] = d3scription;
 }

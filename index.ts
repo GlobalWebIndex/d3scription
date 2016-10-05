@@ -22,8 +22,37 @@ export interface Tip<T> {
     destroy() : void;
 }
 
-const defaultOffset : Offset = { top: -10, left: 10 };
-function getOffset(offset? : Offset) : Offset {
+interface WindowDimensions {
+    width : number,
+    height : number
+}
+
+let windowDimensions : WindowDimensions = {
+    width: window.innerWidth,
+    height: window.innerHeight
+}
+
+function setWindowDimmensions() : void {
+    windowDimensions = {
+        width: window.innerWidth,
+        height: window.innerHeight
+    }
+}
+
+const windowResize = window.addEventListener('resize', setWindowDimmensions);
+
+function getOffset(event, bounds, offset) {
+    const collideHorizontally = windowDimensions.width - event.pageX - offset.left - bounds.width < 0;
+    const collideVertically = windowDimensions.height - event.pageY - offset.top - bounds.height < 0;
+
+    return {
+        top: collideVertically ? event.pageY - bounds.height - offset.top : offset.top + event.pageY,
+        left: collideHorizontally ? event.pageX - bounds.width - offset.left : event.pageX + offset.left
+    };
+}
+
+const defaultOffset : Offset = { top: 10, left: 10 };
+function getOffsetSettings(offset? : Offset) : Offset {
     if (!offset) return defaultOffset;
     return {
         top: offset.top === undefined ? defaultOffset.top : offset.top,
@@ -32,7 +61,7 @@ function getOffset(offset? : Offset) : Offset {
 }
 
 export default function d3scription<T> (contentGetter : ContentGetter<T>, options:Options = {}) {
-    const offset : Offset = getOffset(options.offset);
+    const offsetSettings : Offset = getOffsetSettings(options.offset);
 
     return function (element : d3.Selection<any>) : Tip<T> {
         const tip : d3.Selection<any> = d3.select('body')
@@ -44,9 +73,12 @@ export default function d3scription<T> (contentGetter : ContentGetter<T>, option
 
         function setupTracking(element : d3.Selection<any>) : void {
             element.on('mousemove', () : void => {
+                const bounds = tip.node().getBoundingClientRect();
+                const position = getOffset(d3.event, bounds, offsetSettings)
+
                 tip
-                    .style("top", `${d3.event.pageY + offset.top}px`)
-                    .style("left", `${d3.event.pageX + offset.left}px`);
+                    .style("top", `${position.top}px`)
+                    .style("left", `${position.left}px`);
             });
         }
         setupTracking(element);

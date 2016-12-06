@@ -12,9 +12,12 @@ export interface ContentGetter<T> extends Function {
     (data: T): string;
 }
 export interface Tip<T> {
-    setElement(element: d3.Selection<any>): void;
-    show(data: T): void;
-    hide(): void;
-    destroy(): void;
+    element(element: d3.Selection<any>): Tip<T>;
+    show(data: T): Tip<T>;
+    hide(): Tip<T>;
+    remove(): void;
 }
-export default function d3scription<T>(contentGetter: ContentGetter<T>, options?: Options): (element: d3.Selection<any>) => Tip<T>;
+export interface TipFactory<T> extends Function {
+    (): Tip<T>;
+}
+export default function d3scription<T>(contentGetter: ContentGetter<T>, options?: Options): TipFactory<T>;

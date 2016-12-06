@@ -68,7 +68,8 @@ var el = d3.select('svg')
 var tipFactory = d3scription(function(d) { return d.desc; });
 
 // create tip for our main group element
-var tip = tipFactory(el);
+var tip = tipFactory()
+    .element(el);
 
 // set data to circles
 var circles = el.selectAll('.circle')
@@ -122,12 +123,12 @@ const el = d3.select('#first-example')
 const tipFactory = d3scription((d : Data) => d.desc);
 
 // create tip for our main group element
-const tip = tipFactory(el);
+const tip = tipFactory()
+    .element(el);
 
 // set data to circles
 const circles = el.selectAll('.circle')
     .data(data);
-
 
 // draw circles
 const cEnter = circles.enter()
@@ -149,7 +150,7 @@ Anyway as you can see writing your own styles for tooltip is really simple.
 # API
 
 Api is design as three steps process to make reuse and flow as clean as possible.
-These steps are `setup` > `initialise` > `use`. Folloving paragraphs describes each step individually.
+These steps are `setup` > `initialize` > `use`. Folloving paragraphs describes each step individually.
 
 ## Setup
 
@@ -202,21 +203,21 @@ You can create many tips from one factory using this function.
 
 ```js
 var element = d3.select('svg').append('g');
-var tip = myD3scription(element); // this function was returned by setup
+var tip = myD3scription().element(element); // this function was returned by setup
 ```
 
 ## Tip
 
 Finally you'll have a tip instance returned by from factory (after passing element).
 Now you can call methods on this tip as you wish. Most common case is to `show(data)` and `hide()`
-on mouse events. you can also take advantage of `setElement(element)` for changing orginal element of tip
+on mouse events. you can also take advantage of `element(element)` for changing orginal element of tip
 or using `destroy()`.
 
 ## Tip API
 
 * `show(data)` sets content of tip and displays it.
 * `hide()` hides tip
-* `setElement(element)` sets new element for tip
+* `element(element)` sets new element for tip
 * `destroy()` removes tip from dom
 
 ## Basic Example of usage
@@ -241,6 +242,7 @@ var cEnter = circles.enter()
 ```
 # Changelog
 
+- v1.0.0 - improve API
 - v0.0.2 - window edge collision detections
 - v0.0.1 - initial release
 

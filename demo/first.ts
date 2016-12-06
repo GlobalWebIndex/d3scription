@@ -23,7 +23,8 @@ const el = d3.select('#first-example')
     .append('g');
 
 const tipFactory = d3scription((d : D) => d.desc);
-const tip = tipFactory(el);
+const tip = tipFactory()
+    .element(el);
 
 const circles = el.selectAll('.circle')
     .data(data);

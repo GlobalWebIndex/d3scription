@@ -86,7 +86,7 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	    function d3scription(contentGetter, options) {
 	        if (options === void 0) { options = {}; }
 	        var offsetSettings = getOffsetSettings(options.offset);
-	        return function (element) {
+	        return function () {
 	            var tip = d3.select('body')
 	                .append('div')
 	                .attr('class', options.class || 'd3scription-tip')
@@ -102,19 +102,21 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	                        .style("left", position.left + "px");
 	                });
 	            }
-	            setupTracking(element);
 	            var publicMethods = {
-	                setElement: function (element) {
+	                element: function (element) {
 	                    setupTracking(element);
+	                    return publicMethods;
 	                },
 	                show: function (data) {
 	                    tip.html(contentGetter(data));
 	                    tip.style('visibility', 'visible');
+	                    return publicMethods;
 	                },
 	                hide: function () {
 	                    tip.style('visibility', 'hidden');
+	                    return publicMethods;
 	                },
-	                destroy: function () {
+	                remove: function () {
 	                    tip.remove();
 	                }
 	            };

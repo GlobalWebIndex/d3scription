@@ -9,12 +9,14 @@ var data = [
         y: 70*Math.random()+50,
         desc: 'I love it!'
     }
-]
+];
+
 var el = d3.select('#second-example')
     .append('g');
 
 var tipFactory = d3scription(function(d) { return d.desc; });
-var tip = tipFactory(el);
+var tip = tipFactory()
+    .element(el);
 
 var circles = el.selectAll('.circle')
     .data(data);

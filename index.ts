@@ -16,10 +16,14 @@ export interface ContentGetter<T> extends Function {
 }
 
 export interface Tip<T> {
-    setElement(element : d3.Selection<any>) : void;
-    show(data : T) : void;
-    hide() : void;
-    destroy() : void;
+    element(element : d3.Selection<any>) : Tip<T>;
+    show(data : T) : Tip<T>;
+    hide() : Tip<T>;
+    remove() : void;
+}
+
+export interface TipFactory<T> extends Function {
+    () : Tip<T>
 }
 
 interface WindowDimensions {
@@ -65,10 +69,10 @@ function getOffsetSettings(offset? : Offset) : Position {
     };
 }
 
-export default function d3scription<T> (contentGetter : ContentGetter<T>, options:Options = {}) {
+export default function d3scription<T> (contentGetter : ContentGetter<T>, options:Options = {}) : TipFactory<T> {
     const offsetSettings : Position = getOffsetSettings(options.offset);
 
-    return function (element : d3.Selection<any>) : Tip<T> {
+    return function () : Tip<T> {
         const tip : d3.Selection<any> = d3.select('body')
             .append('div')
             .attr('class', options.class || 'd3scription-tip')
@@ -86,20 +90,25 @@ export default function d3scription<T> (contentGetter : ContentGetter<T>, option
                     .style("left", `${position.left}px`);
             });
         }
-        setupTracking(element);
 
         const publicMethods : Tip<T> = {
-            setElement(element : d3.Selection<any>) : void {
+            element(element : d3.Selection<any>) : Tip<T> {
                 setupTracking(element);
+
+                return publicMethods;
             },
-            show(data : T) : void {
+            show(data : T) : Tip<T> {
                 tip.html(contentGetter(data));
                 tip.style('visibility', 'visible');
+
+                return publicMethods;
             },
-            hide() : void {
+            hide() : Tip<T> {
                 tip.style('visibility', 'hidden');
+
+                return publicMethods;
             },
-            destroy() : void {
+            remove() : void {
                 tip.remove();
             }
         };

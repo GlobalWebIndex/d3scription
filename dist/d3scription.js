@@ -55,37 +55,56 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/// <reference path="d/d3.d.ts" />
 	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
 	    "use strict";
-	    var windowDimensions = {
-	        width: window.innerWidth,
-	        height: window.innerHeight
-	    };
-	    function setWindowDimmensions() {
-	        windowDimensions = {
-	            width: window.innerWidth,
-	            height: window.innerHeight
-	        };
-	    }
-	    var windowResize = window.addEventListener('resize', setWindowDimmensions);
-	    function getOffset(event, bounds, offset) {
-	        var collideVertically = (windowDimensions.height + window.scrollY) - event.pageY - offset.top - bounds.height < 0;
-	        var collideHorizontally = (windowDimensions.width + window.scrollX) - event.pageX - offset.left - bounds.width < 0;
-	        return {
-	            top: collideVertically ? event.pageY - bounds.height - offset.top : offset.top + event.pageY,
-	            left: collideHorizontally ? event.pageX - bounds.width - offset.left : event.pageX + offset.left
-	        };
-	    }
+	    Object.defineProperty(exports, "__esModule", { value: true });
 	    var defaultOffset = { top: 10, left: 10 };
 	    function getOffsetSettings(offset) {
-	        if (!offset)
+	        if (!offset) {
 	            return defaultOffset;
+	        }
 	        return {
 	            top: offset.top === undefined ? defaultOffset.top : offset.top,
 	            left: offset.left === undefined ? defaultOffset.left : offset.left
 	        };
 	    }
+	    function getDimensions(el) {
+	        return {
+	            width: el.innerWidth,
+	            height: el.innerHeight
+	        };
+	    }
 	    function d3scription(contentGetter, options) {
 	        if (options === void 0) { options = {}; }
+	        if (typeof window === 'undefined') {
+	            return function () {
+	                var methods = {
+	                    element: function (element) {
+	                        return methods;
+	                    },
+	                    show: function (data) {
+	                        return methods;
+	                    },
+	                    hide: function () {
+	                        return methods;
+	                    },
+	                    remove: function () { }
+	                };
+	                return methods;
+	            };
+	        }
 	        var offsetSettings = getOffsetSettings(options.offset);
+	        var windowDimensions = getDimensions(window);
+	        function getOffset(event, bounds, offset) {
+	            var collideVertically = (windowDimensions.height + window.scrollY) - event.pageY - offset.top - bounds.height < 0;
+	            var collideHorizontally = (windowDimensions.width + window.scrollX) - event.pageX - offset.left - bounds.width < 0;
+	            return {
+	                top: collideVertically ? event.pageY - bounds.height - offset.top : offset.top + event.pageY,
+	                left: collideHorizontally ? event.pageX - bounds.width - offset.left : event.pageX + offset.left
+	            };
+	        }
+	        function setWindowDimmensions() {
+	            windowDimensions = getDimensions(window);
+	        }
+	        var windowResize = window.addEventListener('resize', setWindowDimmensions);
 	        return function () {
 	            var tip = d3.select('body')
 	                .append('div')
@@ -98,8 +117,8 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	                    var bounds = tip.node().getBoundingClientRect();
 	                    var position = getOffset(d3.event, bounds, offsetSettings);
 	                    tip
-	                        .style("top", position.top + "px")
-	                        .style("left", position.left + "px");
+	                        .style('top', position.top + "px")
+	                        .style('left', position.left + "px");
 	                });
 	            }
 	            var publicMethods = {
@@ -123,7 +142,6 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	            return publicMethods;
 	        };
 	    }
-	    Object.defineProperty(exports, "__esModule", { value: true });
 	    exports.default = d3scription;
 	    // export as Global Object
 	    if (typeof window === 'object') {

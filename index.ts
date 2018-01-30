@@ -80,15 +80,17 @@ export default function d3scription<T> (contentGetter : ContentGetter<T>, option
             .style('z-index', options.zIndex || 100)
             .style('visibility', 'hidden');
 
-        function setupTracking(element : d3.Selection<any>) : void {
-            element.on('mousemove', () : void => {
-                const bounds : ClientRect = tip.node().getBoundingClientRect();
-                const position : Position = getOffset(d3.event, bounds, offsetSettings)
+        function updateTipPosition() {
+            const bounds : ClientRect = tip.node().getBoundingClientRect();
+            const position : Position = getOffset(d3.event, bounds, offsetSettings)
 
-                tip
-                    .style("top", `${position.top}px`)
-                    .style("left", `${position.left}px`);
-            });
+            tip
+                .style("top", `${position.top}px`)
+                .style("left", `${position.left}px`);
+        }
+
+        function setupTracking(element : d3.Selection<any>) : void {
+            element.on('mousemove', updateTipPosition);
         }
 
         const publicMethods : Tip<T> = {
@@ -98,6 +100,7 @@ export default function d3scription<T> (contentGetter : ContentGetter<T>, option
                 return publicMethods;
             },
             show(data : T) : Tip<T> {
+                updateTipPosition();
                 tip.html(contentGetter(data));
                 tip.style('visibility', 'visible');
 

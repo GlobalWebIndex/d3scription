@@ -43,18 +43,19 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(1);
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/// <reference path="d/d3.d.ts" />
 	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
 	    "use strict";
+	    Object.defineProperty(exports, "__esModule", { value: true });
 	    var windowDimensions = {
 	        width: window.innerWidth,
 	        height: window.innerHeight
@@ -93,14 +94,15 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	                .style('position', 'absolute')
 	                .style('z-index', options.zIndex || 100)
 	                .style('visibility', 'hidden');
+	            function updateTipPosition() {
+	                var bounds = tip.node().getBoundingClientRect();
+	                var position = getOffset(d3.event, bounds, offsetSettings);
+	                tip
+	                    .style("top", position.top + "px")
+	                    .style("left", position.left + "px");
+	            }
 	            function setupTracking(element) {
-	                element.on('mousemove', function () {
-	                    var bounds = tip.node().getBoundingClientRect();
-	                    var position = getOffset(d3.event, bounds, offsetSettings);
-	                    tip
-	                        .style("top", position.top + "px")
-	                        .style("left", position.left + "px");
-	                });
+	                element.on('mousemove', updateTipPosition);
 	            }
 	            var publicMethods = {
 	                element: function (element) {
@@ -108,6 +110,7 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	                    return publicMethods;
 	                },
 	                show: function (data) {
+	                    updateTipPosition();
 	                    tip.html(contentGetter(data));
 	                    tip.style('visibility', 'visible');
 	                    return publicMethods;
@@ -123,7 +126,6 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	            return publicMethods;
 	        };
 	    }
-	    Object.defineProperty(exports, "__esModule", { value: true });
 	    exports.default = d3scription;
 	    // export as Global Object
 	    if (typeof window === 'object') {
@@ -132,5 +134,5 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 
-/***/ }
+/***/ })
 /******/ ]);

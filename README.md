@@ -242,6 +242,7 @@ var cEnter = circles.enter()
 ```
 # Changelog
 
+- v1.0.1 - update position on show (fixes situations where `show` is called but `mouseMove` event doesn't happen)
 - v1.0.0 - improve API
 - v0.0.2 - window edge collision detections
 - v0.0.1 - initial release

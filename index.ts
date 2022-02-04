@@ -18,6 +18,7 @@ export interface ContentGetter<T> extends Function {
 export interface Tip<T> {
     element(element : d3.Selection<any>) : Tip<T>;
     show(data : T) : Tip<T>;
+    update(data : T) : Tip<T>;
     hide() : Tip<T>;
     remove() : void;
 }
@@ -103,6 +104,11 @@ export default function d3scription<T> (contentGetter : ContentGetter<T>, option
                 updateTipPosition();
                 tip.html(contentGetter(data));
                 tip.style('visibility', 'visible');
+
+                return publicMethods;
+            },
+            update(data : T) : Tip<T> {
+                tip.html(contentGetter(data));
 
                 return publicMethods;
             },

@@ -14,6 +14,7 @@ export interface ContentGetter<T> extends Function {
 export interface Tip<T> {
     element(element: d3.Selection<any>): Tip<T>;
     show(data: T): Tip<T>;
+    update(data: T): Tip<T>;
     hide(): Tip<T>;
     remove(): void;
 }

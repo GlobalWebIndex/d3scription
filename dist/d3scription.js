@@ -115,6 +115,10 @@ var d3scription = d3scription || {}; d3scription["d3scription"] =
 	                    tip.style('visibility', 'visible');
 	                    return publicMethods;
 	                },
+	                update: function (data) {
+	                    tip.html(contentGetter(data));
+	                    return publicMethods;
+	                },
 	                hide: function () {
 	                    tip.style('visibility', 'hidden');
 	                    return publicMethods;
